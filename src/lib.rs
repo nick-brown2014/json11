@@ -425,7 +425,9 @@ impl PartialEq for Json {
     fn eq(&self, other: &Json) -> bool {
         match (self, other) {
             (Json::Null, Json::Null) => true,
-            (Json::Number(a), Json::Number(b)) => a == b,
+            // `total_cmp` gives a reflexive, total equality (`NaN == NaN`, `-0.0 != 0.0`)
+            // that is consistent with `Ord` below, satisfying the `Eq`/`Ord` contracts.
+            (Json::Number(a), Json::Number(b)) => a.total_cmp(b) == Ordering::Equal,
             (Json::Bool(a), Json::Bool(b)) => a == b,
             (Json::Str(a), Json::Str(b)) => a == b,
             (Json::Array(a), Json::Array(b)) => a == b,
@@ -446,7 +448,7 @@ impl PartialOrd for Json {
 impl Ord for Json {
     fn cmp(&self, other: &Json) -> Ordering {
         match (self, other) {
-            (Json::Number(a), Json::Number(b)) => a.partial_cmp(b).unwrap_or(Ordering::Equal),
+            (Json::Number(a), Json::Number(b)) => a.total_cmp(b),
             (Json::Bool(a), Json::Bool(b)) => a.cmp(b),
             (Json::Str(a), Json::Str(b)) => a.cmp(b),
             (Json::Array(a), Json::Array(b)) => a.cmp(b),
