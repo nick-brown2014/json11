@@ -3,6 +3,10 @@ test
 libjson11.a
 json11.pc
 
+# Rust
+rust/target/
+rust/Cargo.lock
+
 # Cmake
 CMakeCache.txt
 CTestTestfile.cmake

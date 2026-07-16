@@ -1,0 +1,15 @@
+[package]
+name = "json11"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.80"
+license = "MIT"
+description = "A tiny JSON library for Rust, an idiomatic port of the C++11 json11 library."
+repository = "https://github.com/nick-brown2014/json11"
+readme = "README.md"
+keywords = ["json", "parser", "serialization"]
+categories = ["encoding", "parser-implementations"]
+
+[lib]
+name = "json11"
+path = "src/lib.rs"
